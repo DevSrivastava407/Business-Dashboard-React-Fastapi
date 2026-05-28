@@ -21,7 +21,8 @@ function App() {
   const [cityData, setCityData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [sourceData, setSourceData] = useState([]);
-const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(true);
+
   useEffect(() => {
 
     // CITY-WISE API
@@ -93,9 +94,9 @@ const [darkMode, setDarkMode] = useState(true);
         minHeight: "100vh",
         padding: "30px",
         background: darkMode
-  ? "linear-gradient(to right, #141e30, #243b55)"
-  : "linear-gradient(to right, #f5f7fa, #c3cfe2)",
-       color: darkMode ? "white" : "black",
+          ? "linear-gradient(to right, #141e30, #243b55)"
+          : "linear-gradient(to right, #f5f7fa, #c3cfe2)",
+        color: darkMode ? "white" : "black",
         fontFamily: "Arial"
       }}
     >
@@ -109,21 +110,28 @@ const [darkMode, setDarkMode] = useState(true);
       >
         📊 Business Dashboard
       </h1>
-<button
-  onClick={() => setDarkMode(!darkMode)}
-  style={{
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "10px",
-    cursor: "pointer",
-    marginBottom: "20px",
-    background: darkMode ? "white" : "black",
-    color: darkMode ? "black" : "white",
-    fontWeight: "bold"
-  }}
->
-  {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-</button>
+
+      <div style={{ textAlign: "center" }}>
+
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          style={{
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "10px",
+            cursor: "pointer",
+            marginBottom: "30px",
+            background: darkMode ? "white" : "black",
+            color: darkMode ? "black" : "white",
+            fontWeight: "bold",
+            fontSize: "16px"
+          }}
+        >
+          {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
+        </button>
+
+      </div>
+
 
 
 
@@ -131,7 +139,7 @@ const [darkMode, setDarkMode] = useState(true);
 
       <div
         style={{
-        background: darkMode ? "white" : "#f0f0f0",
+          background: darkMode ? "white" : "#f0f0f0",
           padding: "20px",
           borderRadius: "15px",
           marginBottom: "40px",
@@ -148,26 +156,30 @@ const [darkMode, setDarkMode] = useState(true);
           City-wise Business Count
         </h2>
 
-        <BarChart
-          width={700}
-          height={400}
-          data={cityData}
-        >
+        <div style={{ display: "flex", justifyContent: "center" }}>
 
-          <CartesianGrid strokeDasharray="3 3" />
+          <BarChart
+            width={700}
+            height={400}
+            data={cityData}
+          >
 
-          <XAxis dataKey="city" />
+            <CartesianGrid strokeDasharray="3 3" />
 
-          <YAxis />
+            <XAxis dataKey="city" />
 
-          <Tooltip />
+            <YAxis />
 
-          <Bar
-            dataKey="total"
-            fill="#00C49F"
-          />
+            <Tooltip />
 
-        </BarChart>
+            <Bar
+              dataKey="total"
+              fill="#00C49F"
+            />
+
+          </BarChart>
+
+        </div>
 
       </div>
 
@@ -178,7 +190,7 @@ const [darkMode, setDarkMode] = useState(true);
 
       <div
         style={{
-          background: "white",
+          background: darkMode ? "white" : "#f0f0f0",
           padding: "20px",
           borderRadius: "15px",
           marginBottom: "40px",
@@ -195,26 +207,30 @@ const [darkMode, setDarkMode] = useState(true);
           Category-wise Business Count
         </h2>
 
-        <BarChart
-          width={700}
-          height={400}
-          data={categoryData}
-        >
+        <div style={{ display: "flex", justifyContent: "center" }}>
 
-          <CartesianGrid strokeDasharray="3 3" />
+          <BarChart
+            width={700}
+            height={400}
+            data={categoryData}
+          >
 
-          <XAxis dataKey="category" />
+            <CartesianGrid strokeDasharray="3 3" />
 
-          <YAxis />
+            <XAxis dataKey="category" />
 
-          <Tooltip />
+            <YAxis />
 
-          <Bar
-            dataKey="total"
-            fill="#8884d8"
-          />
+            <Tooltip />
 
-        </BarChart>
+            <Bar
+              dataKey="total"
+              fill="#8884d8"
+            />
+
+          </BarChart>
+
+        </div>
 
       </div>
 
@@ -225,7 +241,7 @@ const [darkMode, setDarkMode] = useState(true);
 
       <div
         style={{
-          background: "white",
+          background: darkMode ? "white" : "#f0f0f0",
           padding: "20px",
           borderRadius: "15px",
           boxShadow: "0px 0px 15px rgba(0,0,0,0.3)"
@@ -241,34 +257,38 @@ const [darkMode, setDarkMode] = useState(true);
           Source-wise Business Count
         </h2>
 
-        <PieChart width={500} height={400}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
 
-          <Pie
-            data={sourceData}
-            dataKey="total"
-            nameKey="source"
-            cx="50%"
-            cy="50%"
-            outerRadius={120}
-            label
-          >
+          <PieChart width={500} height={400}>
 
-            {sourceData.map((entry, index) => (
+            <Pie
+              data={sourceData}
+              dataKey="total"
+              nameKey="source"
+              cx="50%"
+              cy="50%"
+              outerRadius={120}
+              label
+            >
 
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
+              {sourceData.map((entry, index) => (
 
-            ))}
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
 
-          </Pie>
+              ))}
 
-          <Tooltip />
+            </Pie>
 
-          <Legend />
+            <Tooltip />
 
-        </PieChart>
+            <Legend />
+
+          </PieChart>
+
+        </div>
 
       </div>
 

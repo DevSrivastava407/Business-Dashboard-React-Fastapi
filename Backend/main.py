@@ -6,6 +6,8 @@ import mysql.connector
 
 app = FastAPI()
 
+# CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,7 +15,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# MySQL connection
+
+# MYSQL CONNECTION
+
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -21,14 +25,11 @@ db = mysql.connector.connect(
     database="business_db"
 )
 
-cursor = db.cursor(dictionary=True)
+cursor = db.cursor()
 
-# Home API
-@app.get("/")
-def home():
-    return {"message": "Backend Running"}
 
-# City-wise count API
+# CITY-WISE API
+
 @app.get("/city-wise")
 def city_wise():
 
@@ -40,22 +41,24 @@ def city_wise():
 
     cursor.execute(query)
 
-    result = cursor.fetchall()
+    data = cursor.fetchall()
+
+    result = []
+
+    for row in data:
+        result.append({
+            "city": row[0],
+            "total": int(row[1])
+        })
 
     return result
 
-# Category-wise count API
+
+
+# CATEGORY-WISE API
+
 @app.get("/category-wise")
 def category_wise():
-
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Nothing@12",
-        database="business_db"
-    )
-
-    cursor = db.cursor(dictionary=True)
 
     query = """
     SELECT category, COUNT(*) as total
@@ -67,20 +70,22 @@ def category_wise():
 
     data = cursor.fetchall()
 
-    return data
+    result = []
 
-# Source-wise count API
+    for row in data:
+        result.append({
+            "category": row[0],
+            "total": int(row[1])
+        })
+
+    return result
+
+
+
+# SOURCE-WISE API
+
 @app.get("/source-wise")
 def source_wise():
-
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Nothing@12",
-        database="business_db"
-    )
-
-    cursor = db.cursor(dictionary=True)
 
     query = """
     SELECT source, COUNT(*) as total
@@ -92,4 +97,12 @@ def source_wise():
 
     data = cursor.fetchall()
 
-    return data
+    result = []
+
+    for row in data:
+        result.append({
+            "source": row[0],
+            "total": int(row[1])
+        })
+
+    return result
